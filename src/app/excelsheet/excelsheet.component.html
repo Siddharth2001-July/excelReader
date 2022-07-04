@@ -1,0 +1,48 @@
+<div class="container">
+
+    <div class="section">
+        <div class="input-group">
+            <input type="file"
+                accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                (change)="onFileChange($event)" multiple="false" class="form-control" id="inputGroupFile04"
+                aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+        </div>
+    </div>
+
+    <div id="tab" class="section">
+        <table class="table table-striped">
+            <thead class="table-primary">
+                <tr>
+                    <th *ngFor="let column of header">
+                        {{column}}
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let row of data">
+                    <td *ngFor="let cell of row">
+                        {{cell}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<script>
+    $(function () {
+        $('form').submit(function () {
+            var isOk = true;
+            $('input[type=file][max-size]').each(function () {
+                if (typeof this.files[0] !== 'undefined') {
+                    var maxSize = parseInt($(this).attr('max-size'), 10),
+                        size = this.files[0].fileSize;
+                    isOk = maxSize > size;
+                    return isOk;
+                }
+            });
+            return isOk;
+        });
+    });
+</script>
